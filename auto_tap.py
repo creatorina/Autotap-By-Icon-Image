@@ -94,7 +94,7 @@ threading.Thread(target=polling_watcher, daemon=True).start()
 print("-" * 35)
 print("HOTKEYS CONTROL:")
 print("6 = PLAY")
-print("7 = PAUSE")
+print("7 = HOLD TO PAUSE")
 print("8 = MODE KLIK MOUSE")
 print("9 = MODE KEY (" + target_key.upper() + ")")
 print("0 = EXIT PROGRAM")
@@ -152,8 +152,10 @@ try:
                 clicked_positions.append((x, y))
 
                 if mode == "click":
+		    # ======SETING SEBERAPA CEPAT MOUSE BERPINDAH=======
                     pyautogui.moveTo(x, y, duration=0.01)
                     time.sleep(0.01)
+		    #=======SETING SEBERAPA CEPAT MOUSE KLIK ==========
                     pyautogui.mouseDown()
                     time.sleep(0.01)
                     pyautogui.mouseUp()
@@ -167,7 +169,7 @@ try:
                     break # Keluar dari loop koordinat untuk scan ulang layar baru
 
                 time.sleep(0.01)
-	
+	# ===========SETING SEBERAPA CEPAT SCAN GAMBAR DI MONITOR =====
         if not found_any:
             time.sleep(0.01)
 
