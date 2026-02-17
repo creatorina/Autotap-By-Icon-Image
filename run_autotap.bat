@@ -1,67 +1,68 @@
 @echo off
-title AutoTap Universal Launcher
+title AUTO TAP BOT LAUNCHER
 color 0A
+cls
 
-echo =====================================
-echo   AutoTap Launcher - CreatorIna
-echo =====================================
+echo ========================================
+echo     AUTO TAP LAUNCHER BY CR FAUZI 08
+echo ========================================
 echo.
 
-REM ===============================
-REM Auto Detect Python
-REM ===============================
-where python >nul 2>nul
+:: ===============================
+:: CEK PYTHON
+:: ===============================
+python --version >nul 2>&1
 IF %ERRORLEVEL% NEQ 0 (
-    echo ❌ Python tidak ditemukan!
-    echo Install Python dulu dan centang "Add Python to PATH"
+    echo Python Not Found!
+    echo Install Python 3.13 First!.
     pause
     exit
 )
 
-echo ✅ Python ditemukan
-echo.
-
-REM ===============================
-REM Upgrade PIP
-REM ===============================
-echo 🔄 Update pip...
-python -m pip install --upgrade pip >nul
-
-REM ===============================
-REM Install Required Libraries
-REM ===============================
-echo 🔄 Mengecek library...
-
-python -m pip install pyautogui opencv-python numpy watchdog pillow
-
-echo.
-echo ✅ Semua library siap
-echo.
-
-REM ===============================
-REM Cek File Script
-REM ===============================
-IF NOT EXIST launcher_watch.py (
-    echo ❌ launcher_watch.py tidak ditemukan!
-    pause
-    exit
+:: ===============================
+:: CEK FLAG FILE
+:: ===============================
+IF EXIST dependency_check.flag (
+    echo Dependency Already check.
+    echo.
+    goto RUN
 )
 
-IF NOT EXIST auto_tap.py (
-    echo ❌ auto_tap.py tidak ditemukan!
-    pause
-    exit
-)
-
-IF NOT EXIST templates (
-    echo ⚠ Folder templates belum ada - membuat folder...
-    mkdir templates
-)
-
-echo.
-echo 🚀 Menjalankan AutoTap...
+echo Checking dependency ...
 echo.
 
-python launcher_watch.py
+:: Upgrade pip silent
+python -m pip install --upgrade pip >nul 2>&1
+
+:: ===============================
+:: INSTALL + STATUS
+:: ===============================
+
+echo Checking Keyboard...
+python -m pip install keyboard >nul 2>&1 && echo Keyboard  : Ready!
+
+echo Checking PyAutoGUI...
+python -m pip install pyautogui >nul 2>&1 && echo PyAutoGUI : Ready!
+
+echo Checking OpenCV...
+python -m pip install opencv-python >nul 2>&1 && echo OpenCV   : Ready!
+
+echo Checking NumPy...
+python -m pip install numpy >nul 2>&1 && echo NumPy    : Ready!
+
+echo Checking Watchdog...
+python -m pip install watchdog >nul 2>&1 && echo Watchdog : Ready!
+
+echo.
+echo Dependency Finish Check.
+echo.
+
+:: Buat flag agar tidak cek lagi
+echo checked > dependency_check.flag
+
+:RUN
+echo RUNING AUTO TAP...
+echo.
+python auto_tap.py
 
 pause
